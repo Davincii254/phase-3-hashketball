@@ -127,3 +127,68 @@ def game_hash
 end
 
 # Write code here
+
+
+# Get all players
+def all_players
+  game_hash[:home][:players] + game_hash[away][[:players]]
+end
+
+# Points
+def number_points (player_name)
+  player = player_status(player_name)
+  player[:points]
+end
+
+# shoe size
+def shoe_size(player_name)
+  player = player_stats(player_name)
+  player[:shoe]
+end
+
+# find team by their teams
+def find_team(team_name)
+  team_info = game_hash.find do |location, team_data|
+    team_data[:team_name] == team_name
+  end
+team_info[1]
+end
+
+# team colors
+def team_colors(team_name)
+  team = find_team(team_name)
+  team[:colors]
+end
+
+# team names
+def team_names
+  game_hash.map do |location, team_data|
+    team_data[:team_name]
+  end
+end
+
+# team numbers
+def player_numbers(team_name)
+  team = find_team(team_name)
+  team[:players].map do |player|
+    player[:number]
+  end
+end
+
+# team status
+def player_stats(player_name)
+  all_players.find do |player| 
+    player[:player_name] == player_name 
+  end
+end
+
+#  player with biggest shoe
+def big_shoe_player
+  all_players.max_by do |player|
+    player[:shoe]
+  end
+end
+
+def big_shoe_rebounds
+  big_shoe_player[:rebounds]
+end
